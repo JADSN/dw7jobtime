@@ -13,7 +13,7 @@ class ProjectRepositoryImpl implements ProjectRepository {
   final Database _database;
 
   ProjectRepositoryImpl({
-    required database,
+    required Database database,
   }) : _database = database;
 
   @override

@@ -1,11 +1,17 @@
-import 'dart:developer';
-
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+
+import 'package:dw7_job_timer/app/modules/home/controller/home_controller.dart';
 
 import '../../../entities/project_status.dart';
 
 class HeaderProjectsMenu extends SliverPersistentHeaderDelegate {
+  final HomeController controller;
+  HeaderProjectsMenu({
+    required this.controller,
+  });
+
   @override
   Widget build(
     BuildContext context,
@@ -24,6 +30,7 @@ class HeaderProjectsMenu extends SliverPersistentHeaderDelegate {
               SizedBox(
                 width: constraints.maxWidth * 0.5,
                 child: DropdownButtonFormField<ProjectStatus>(
+                  value: ProjectStatus.em_andamento,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20),
@@ -41,7 +48,11 @@ class HeaderProjectsMenu extends SliverPersistentHeaderDelegate {
                         ),
                       )
                       .toList(),
-                  onChanged: (value) {},
+                  onChanged: (ProjectStatus? status) {
+                    if (status != null) {
+                      controller.filter(status);
+                    }
+                  },
                 ),
               ),
               SizedBox(
@@ -49,9 +60,9 @@ class HeaderProjectsMenu extends SliverPersistentHeaderDelegate {
                 child: ElevatedButton.icon(
                   icon: const Icon(Icons.add),
                   label: const Text('Novo Projeto'),
-                  onPressed: () {
-                    log("NEW PROJECT");
-                    Modular.to.pushNamed('/project/register/');
+                  onPressed: () async {
+                    await Modular.to.pushNamed('/project/register/');
+                    controller.loadProjects();
                   },
                 ),
               )

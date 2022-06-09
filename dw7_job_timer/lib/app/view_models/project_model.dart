@@ -33,4 +33,9 @@ class ProjectModel {
       tasks: project.tasks.map(ProjectTaskModel.fromEntity).toList(),
     );
   }
+
+  @override
+  String toString() {
+    return 'ProjectModel(id: $id, name: $name, estimate: $estimate, status: $status, tasks: $tasks)';
+  }
 }

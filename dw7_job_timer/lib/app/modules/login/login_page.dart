@@ -23,7 +23,6 @@ class LoginPage extends StatelessWidget {
       bloc: controller,
       listenWhen: (previous, current) => previous.status != current.status,
       listener: (context, state) {
-        log("[STATUS]: ${state.status}");
         if (state.status == LoginStatus.failure) {
           final message = state.errorMessage ?? 'Error ao realizar login';
           AsukaSnackbar.alert(message).show();
